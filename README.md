@@ -1,20 +1,18 @@
--- README.md
+# Flight Price Tracker (Python + PostgreSQL)
 
--- Flight Price Tracker (Python + PostgreSQL)
+A simple project that stores flights in PostgreSQL, fetches prices (currently random),
+saves price history, and compares new vs old prices.
 
--- A simple system for tracking flight prices. 
--- Prices are fetched (currently random), stored in PostgreSQL, 
--- and compared with the previous value.
+## Project Structure
+- config.py (DB settings)
+- database.py (insert/select operations)
+- fetch_price.py (price generator placeholder)
+- tracker.py (price checking logic)
+- main.py (initial database test)
 
--- Structure
--- config.py       : DB settings
--- database.py     : Insert/select operations
--- fetch_price.py  : Price generator (placeholder for real scraping)
--- tracker.py      : Fetch price, save history, compare
--- main.py         : Initial database test
+## Database Schema
 
--- Database Schema
-
+-- flights table
 CREATE TABLE flights (
     id SERIAL PRIMARY KEY,
     origin VARCHAR(10) NOT NULL,
@@ -24,6 +22,7 @@ CREATE TABLE flights (
     url TEXT NOT NULL
 );
 
+-- price_history table
 CREATE TABLE price_history (
     id SERIAL PRIMARY KEY,
     flight_id INT NOT NULL REFERENCES flights(id) ON DELETE CASCADE,
@@ -32,20 +31,20 @@ CREATE TABLE price_history (
     checked_at TIMESTAMP DEFAULT NOW()
 );
 
--- How to Run
--- 1) Install packages:
--- pip install psycopg2-binary requests beautifulsoup4
+## How to Run
+1. Install packages:
+   pip install psycopg2-binary requests beautifulsoup4
 
--- 2) Update config.py with DB credentials
+2. Update config.py with your DB credentials.
 
--- 3) Create tables using SQL above
+3. Create the tables using the SQL above.
 
--- 4) Test database:
--- python main.py
+4. Test database connection:
+   python main.py
 
--- 5) Track prices:
--- python tracker.py
+5. Run the price tracker:
+   python tracker.py
 
--- Notes
--- - Real scraping can replace fetch_price.py
--- - Email alerts can be added when price drops
+## Notes
+- fetch_price.py currently returns a random price.
+- Ready for real scraping and email alerts in the next step.
